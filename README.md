@@ -1,19 +1,31 @@
-# idumzaes/cups_airprint
-CUPS Airprint Server built from arm64v8/alpine
+# enginefeeder101/docker-cups-brother-mfc-l2710dw
+CUPS Server Docker image for the Brother MFC-L2710DW
 
 ## Setup
 ### Volumes:
-`/config`: where the persistent printer configs will be stored.<br>
-`/services`: where Avahi service files will be generated.
-### Variables:
-`CUPSADMIN`: the CUPS admin user you want created.<br>
-`CUPSPASSWORD`: the password for the CUPS admin user.
+`/config`: where the persistent configurations will be stored
+### Environment Variables:
+`CUPSADMIN`: the CUPS admin user, defaults to `admin`
+`CUPSPASSWORD`: the password for the CUPS admin user, defaults to `admin`
 ### Ports:
-`631`: the TCP port for CUPS must be exposed
+`631`: CUPS port
 
-## Create and run container with:
+## Run with docker-compose
+```
+version: '3'
 
-`docker run -dit --restart unless-stopped --name cups-airprint -e CUPSADMIN=admin -e CUPSPASSWORD=pass -v ~/cups-data/config:/config -v ~/cups-data/services:/services -p 631:631 idumzaes/cups_airprint`
+services:
+  docker-cups-brother-mfc-l2710dw:
+    image: enginefeeder101/docker-cups-brother-mfc-l2710dw:latest
+    container_name: docker-cups-brother-mfc-l2710dw
+    environment:
+      - CUPSADMIN=admin
+      - CUPSPASSWORD=admin
+    volumes:
+      - /data/docker-cups-brother-mfc-l2710dw:/config:rw
+    ports:
+      - 631:631
+```
 
-### CUPS Web Config
-CUPS will be configurable at http://[diskstation]:631 using the CUPSADMIN/CUPSPASSWORD when you do something administrative.
+## Configure
+Either configure CUPS through the files in `config` or use the web interface. The web interface can be found at [http://your-docker-server:631](#). Use `CUPSADMIN` & `CUPSPASSWORD` when you need to do something administrative.
