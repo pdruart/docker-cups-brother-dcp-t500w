@@ -42,6 +42,13 @@ else
     cp /config/printers.conf /etc/cups/printers.conf
 fi
 
+# Dirty IPv6 fix
+if sysctl -a|grep -q "disable_ipv6 = 1"; then
+    grep -v :: /etc/hosts > /etc/hosts_ipv4
+    cat /etc/hosts_ipv4 > /etc/hosts
+    rm /etc/hosts_ipv4
+fi
+
 # Notify script, will run forked
 function inotify() {
     # Stop being verbose
