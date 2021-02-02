@@ -39,7 +39,7 @@ if [ ! -f /config/cupsd.conf ]; then
     echo 'ServerAlias *' >> /etc/cups/cupsd.conf
     echo 'DefaultEncryption Never' >> /etc/cups/cupsd.conf
 else
-    cp /config/printers.conf /etc/cups/printers.conf
+    cp /config/cupsd.conf /etc/cups/cupsd.conf
 fi
 
 # Dirty IPv6 fix
